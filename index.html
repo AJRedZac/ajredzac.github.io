@@ -3,23 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitio</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Portafolio</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+	
 </head>
+
 <body>
-    <div class="container">
+	<header>
+		
+		<nav>
+			<ul>
+				<li><a href="#">Sobre Mí</a></li>
+				<li><a href="#">Galería</a></li>
+				<li><a href="#">Contacto</a></li>
+				
+			</ul>
+		</nav>
+	</header>
+    <section class="main-container">
         <!-- Sección izquierda con la imagen -->
-        <div class="left">
-            <img src="myImageBlue.jpg" alt="Foto" class="profile-image">
+        <div class="main-left">
+            <img src="images/myImageOrange.png" alt="Foto" class="main-image">
         </div>
         
         <!-- Sección derecha con el texto -->
-        <div class="right">
-            <h1>¡Hola!</h1>
-            <p>Mi nombre es <span class="keyword">Alvaro Redondo</span>.</p>
-            <p>Soy Ingeniero en Sistemas Computacionales, especializado en Ingeniería de Software. Gané el Premio CENEVAL a la Excelencia Académica en mi examen de egreso de la Licenciatura.</p>
-            <p>Trabajé como Interno de Software en Harman, Querétaro, como Desarrollador BPM en Motivus y como Desarrollador Backend en <a href="https://www.toquin.com/" target="_blank">Toquin</a>.</p>
+        <div class="main-right">
+			<h1 class="main">ALVARO REDONDO</h1>
+            <h2 class="main">Desarrollador de Software</h2>
         </div>
-    </div>
+		
+		
+    </section>
+	
+	<section class="pro-container">
+	
+	
+		<div class="pro-title">
+			<h1>EXPERIENCIA PROFESIONAL</h1>
+        </div>
+		<!-- Primera fila -->
+        <div class="top-row">
+            <!-- Sección izquierda con el texto -->
+			
+			<div class="pro-right">    
+                <img src="images/harmanW2.png" alt="Logo de Harman">
+            </div>
+            
+			
+            <div class="pro-right">    
+                <img src="images/toquinW.png" alt="Logo de Toquin" >
+				
+            </div>
+			
+			<!-- Sección derecha con la imagen -->
+            <div class="pro-right">    
+                <img src="images/motivusW.png" alt="Logo de Motivus" >
+            </div>
+			
+          
+			
+        </div>
+
+        <div class="bot-row">
+			
+				
+			<div class="pro-left">
+                <h2>Interno de Software</h2>
+                <h3>Enero 2018 - Agosto 2018 </h3>
+				<h3>&#8203;</h3>
+				<p>Optimicé herramientas clave como EQTool API y EQTool Sniffer, 
+				logrando una mejora del 99% en la eficiencia de procesamiento 
+				mediante la refactorización de algoritmos en C++ y C#. 
+				También contribuí al desarrollo del Virtual Amp, facilitando 
+				pruebas sin hardware físico. </p>
+				
+			</div>
+			
+			
+			<div class="pro-left">
+				<h2>Desarrollador Backend</h2>
+				<h3>Febrero 2023 - Julio 2024 &#10;</h3>
+				<h3>&#8203;</h3>
+				<p>Diseñé e implementé una API con arquitectura de microservicios REST
+				para la funcionalidad del backend de la App de Toquin. 
+				Configuré un sistema de búsqueda con Typesense sincronizado 
+				con MongoDB mediante un mecanismo de replicación de datos. 
+				Utilicé tecnologías como Java,Maven, Spring Boot y AWS.
+				</p>
+				
+			</div>
+				
+			
+			
+			<div class="pro-left">
+                <h2>Desarrollador BPM</h2>
+                <h3>Mayo 2023 - Presente</h3>
+                <h3>Octubre 2018 - Julio 2022</h3>
+				
+            
+				<p>Desarrollo y mantenimiento de Clearance Care Central, 
+				una plataforma para la gestión de prescripciones 
+				médicas de la aseguradora Cigna. Trabajé con PEGA, 
+				una plataforma de desarrollo low-code basada en Java, 
+				siguiendo metodologías ágiles tipo Scrum. 
+				Resolví incidentes de producción, 
+				incluyendo análisis de causa raíz y hot fixes.</p>
+			</div>
+			
+		</div> 
+
+    </section>
+	
+	<section class="skills-container">
+		<div class="pro-title">
+			<h1>ESTUDIOS Y CERTIFICACIONES</h1>
+        </div>
+		
+		<div class="top-row">
+            <!-- Sección izquierda con el texto -->
+			
+			<div class="pro-right">    
+                <img src="images/logoTec.png" alt="Logo de ITM">
+            </div>
+            
+			
+            <div class="pro-right">    
+                <img src="images/udemLogo.png" alt="Logo de UDEM" >
+				
+            </div>
+			
+			
+			
+          
+			
+        </div>
+
+        <div class="bot-row-aca">
+			
+				
+			<div class="pro-left">
+                <h2>Ingeniería en Sistemas Computacionales</h2>
+                <h3>Instituto Tecnológico de Morelia</h3>
+				<h3>Agosto 2012 - Octubre 2018</h3>
+				
+				
+			</div>
+			
+			
+			<div class="pro-left">
+				<h2>Maestría en Diseño y Desarrollo de Videojuegos</h2>
+				
+				<h3>Universidad de Morelia</h3>
+				<h3>Agosto 2023 - Presente</h3>
+				
+				
+			</div>
+				
+			
+			
+			
+			
+		</div> 
+	</section>
+
+	<section class="academic-container">
+	
+	
+		<div class="pro-title">
+			<h1>HABILIDADES Y HERRAMIENTAS</h1>
+        </div>
+		
+
+    </section>
+	
+	
 </body>
 </html>
