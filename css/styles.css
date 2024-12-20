@@ -1,8 +1,8 @@
 
 
 body {
-    background-color: #171917;
-    color: #cbd0e6;
+    background-color: #000000;
+    color: #F6F8FF;
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #171917; /* Puedes cambiar el color si es necesario */
+    background-color: #000000; /* Puedes cambiar el color si es necesario */
     padding: 10px;
     width: 100%;
     top: 0;
@@ -40,7 +40,7 @@ header li {
 
 /* Estilos para los enlaces */
 header a {
-    color: #cbd0e6;
+    color: #F6F8FF;
     text-decoration: none;
     font-size: 30px;
     font-weight: bold;
@@ -49,15 +49,15 @@ header a {
 
 /* Efecto hover para los enlaces */
 header a:hover {
-    color: #4fe1ea; /* Cambia de color al pasar el mouse */
+    color: #CB154C; /* Cambia de color al pasar el mouse */
 }
 
 header a:active{
-	color: #ffffff;
+	color: #FF5588;
 }
 
 header a:visited{
-	color:#cbd0e6
+	color:#e92c64
 }
 /* Responsive design para pantallas pequeñas */
 @media (max-width: 768px) {
@@ -79,6 +79,28 @@ section {
     align-items: center;
 }
 
+section.gallery{
+	
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+	flex-wrap: wrap;
+	
+}
+
+
+.gallery-container{
+	
+	height: 50vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items:center;
+	flex-wrap: wrap;
+	
+}
 
 
 .main-container {
@@ -94,6 +116,20 @@ section {
     top: 0;
 }
 
+..main-container-game {
+	
+	display: flex;
+	flex-flow: row wrap;
+    justify-content: center;
+	align-items: center;
+	align-content: center;
+	margin-top:5%;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
 .main-left{
 	
     
@@ -101,7 +137,17 @@ section {
     
 }
 
+.main-left-game-info{
+	flex: 1;
+}
+
+
 .main-right {
+  
+    flex: 2.5;
+}
+
+.main-right-game {
   
     flex: 2.5;
 }
@@ -116,8 +162,14 @@ section {
    
    max-height: 100vh; /* maintain aspect ratio*/
    margin-left: auto;
+   
 }
 
+.main-left-game-info img{
+   display: block;
+   max-height: 70vh;
+   
+}
 .pro-container {
     display: flex;
 	flex-flow: column;
@@ -131,6 +183,8 @@ section {
 }
 
 .pro-title{
+	margin-top: 5%;
+	margin-left: 5%;
 	align-self: flex-start;
 }
 
@@ -214,7 +268,7 @@ h1.main{
 
 h2.main{
 	font-size: 65px;
-	color: #cbd0e6;
+	color: #F6F8FF;
 	margin-left:20px;
 	margin-top:0;
 }
@@ -227,14 +281,14 @@ h1{
 
 h2{
 	font-size: 40px;
-	color: #4fe1ea;
+	color: #e92c64;
 	
 	margin-bottom:0;
 	
 }
 h3{
 	font-size: 30px;
-	color: #cbd0e6;
+	color: #F6F8FF;
 	margin-bottom:0;
 	margin-top:0;
 }
@@ -245,6 +299,15 @@ p {
     margin: 35px; /* Reduce el espacio entre párrafos */
     text-align: justify;
 }
+
+p.gameDescription {
+    font-size: 22px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-top: 0;
+    text-align: justify;
+}
+
 
 
 .keyword {
@@ -260,14 +323,40 @@ a {
 }
 
 a:hover {
-    color: #00f0ff;
+    color: #CB154C;
     text-decoration: none;
 }
 
 a:active {
-    color: #ffffff;
+    color: #FF5588;
 }
 
 a:visited {
     color: #e92c64;
+}
+
+.download-button{
+	margin-top:10%;
+	background-color: #CB154C;
+	color: #F6F8FF;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+}
+
+.download-button:hover{
+	color: #F6F8FF;
+	background-color: #e92c64;
+	text-decoration: none;
+}
+
+.download-button:active{
+	color: #e92c64;
+	background-color: #F6F8FF;
+	text-decoration: none;
 }
