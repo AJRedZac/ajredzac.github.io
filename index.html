@@ -23,160 +23,64 @@
 		</nav>
 	</header>
     <section class="main-container">
-        <!-- Sección izquierda con la imagen -->
-        <div class="main-left">
-            <img src="images/myImageOrange.png" alt="Foto" class="main-image">
-        </div>
+        
         
         <!-- Sección derecha con el texto -->
+        <div class="main-left">
+			<h2 class="main">Desarrollador de Videojuegos</h2>
+			<h1 class="main">ALVARO J. REDONDO Z.</h1>
+			<p> Soy un profesional con más de 6 años de experiencia en desarrollo de software, comprometido con alcanzar los más altos estándares de calidaden cada proyecto.
+			    Mi objetivo es crear videojuegos innovadores que destaquen por su creatividad. 
+				La idea es conectar a las personas a través de experiencias de <span class="keyword">entretenimiento auténtico</span>. </p>
+			<div class="main-btns">
+				<button href="" class="download-button" >CONTRATAR</button>
+				<button href="" class="download-button" >DESCARGAR CV</button>
+			</div>
+        </div>
+		
+		<!-- Sección izquierda con la imagen -->
         <div class="main-right">
-			<h1 class="main">ALVARO REDONDO</h1>
-            <h2 class="main">Desarrollador de Software</h2>
+            <img src="images/myImageOrange.png" alt="Foto" class="main-image">
         </div>
 		
 		
     </section>
 	
-	<section class="pro-container">
-	
-	
-		<div class="pro-title">
-			<h1>EXPERIENCIA PROFESIONAL</h1>
-        </div>
-		<!-- Primera fila -->
-        <div class="top-row">
-            <!-- Sección izquierda con el texto -->
-			
-			<div class="pro-right">    
-                <img src="images/harmanW2.png" alt="Logo de Harman">
-            </div>
-            
-			
-            <div class="pro-right">    
-                <img src="images/toquinW.png" alt="Logo de Toquin" >
-				
-            </div>
-			
-			<!-- Sección derecha con la imagen -->
-            <div class="pro-right">    
-                <img src="images/motivusW.png" alt="Logo de Motivus" >
-            </div>
-			
-          
-			
-        </div>
+	<script>
+		async function registerVisit() {
+			// Prepare visit data
+			const visitData = {
+				referrer: document.referrer || 'Direct Access', // Referrer or "Direct Access"
+				userAgent: navigator.userAgent,               // Visitor's User-Agent
+				language: navigator.language || 'Unknown',    // Visitor's preferred language
+				path: window.location.pathname,               // Path of the current page
+				protocol: window.location.protocol.replace(':', ''), // Protocol (HTTP/HTTPS)
+				method: 'GET',                                // HTTP method used by the browser
+			};
 
-        <div class="bot-row">
-			
-				
-			<div class="pro-left">
-                <h2>Interno de Software</h2>
-                <h3>Enero 2018 - Agosto 2018 </h3>
-				<h3>&#8203;</h3>
-				<p>Optimicé herramientas clave como EQTool API y EQTool Sniffer, 
-				logrando una mejora del 99% en la eficiencia de procesamiento 
-				mediante la refactorización de algoritmos en C++ y C#. 
-				También contribuí al desarrollo del Virtual Amp, facilitando 
-				pruebas sin hardware físico. </p>
-				
-			</div>
-			
-			
-			<div class="pro-left">
-				<h2>Desarrollador Backend</h2>
-				<h3>Febrero 2023 - Julio 2024 &#10;</h3>
-				<h3>&#8203;</h3>
-				<p>Diseñé e implementé una API con arquitectura de microservicios REST
-				para la funcionalidad del backend de la App de Toquin. 
-				Configuré un sistema de búsqueda con Typesense sincronizado 
-				con MongoDB mediante un mecanismo de replicación de datos. 
-				Utilicé tecnologías como Java,Maven, Spring Boot y AWS.
-				</p>
-				
-			</div>
-				
-			
-			
-			<div class="pro-left">
-                <h2>Desarrollador BPM</h2>
-                <h3>Mayo 2023 - Presente</h3>
-                <h3>Octubre 2018 - Julio 2022</h3>
-				
-            
-				<p>Desarrollo y mantenimiento de Clearance Care Central, 
-				una plataforma para la gestión de prescripciones 
-				médicas de la aseguradora Cigna. Trabajé con PEGA, 
-				una plataforma de desarrollo low-code basada en Java, 
-				siguiendo metodologías ágiles tipo Scrum. 
-				Resolví incidentes de producción, 
-				incluyendo análisis de causa raíz y hot fixes.</p>
-			</div>
-			
-		</div> 
+			try {
+				// Send a POST request to the backend
+				const response = await fetch('https://mysimpleserver-aebu.onrender.com/register-visit', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json', // Specify the content type
+					},
+					body: JSON.stringify(visitData),      // Send the collected data as JSON
+				});
 
-    </section>
-	
-	<section class="skills-container">
-		<div class="pro-title">
-			<h1>ESTUDIOS Y CERTIFICACIONES</h1>
-        </div>
-		
-		<div class="top-row">
-            <!-- Sección izquierda con el texto -->
-			
-			<div class="pro-right">    
-                <img src="images/logoTec.png" alt="Logo de ITM">
-            </div>
-            
-			
-            <div class="pro-right">    
-                <img src="images/udemLogo.png" alt="Logo de UDEM" >
-				
-            </div>
-			
-			
-			
-          
-			
-        </div>
+				if (response.ok) {
+					console.log('Visit registered successfully!');
+				} else {
+					console.error('Failed to register visit:', response.status);
+				}
+			} catch (error) {
+				console.error('Error registering visit:', error);
+			}
+  }
 
-        <div class="bot-row-aca">
-			
-				
-			<div class="pro-left">
-                <h2>Ingeniería en Sistemas Computacionales</h2>
-                <h3>Instituto Tecnológico de Morelia</h3>
-				<h3>Agosto 2012 - Octubre 2018</h3>
-				
-				
-			</div>
-			
-			
-			<div class="pro-left">
-				<h2>Maestría en Diseño y Desarrollo de Videojuegos</h2>
-				
-				<h3>Universidad de Morelia</h3>
-				<h3>Agosto 2023 - Presente</h3>
-				
-				
-			</div>
-				
-			
-			
-			
-			
-		</div> 
-	</section>
-
-	<section class="academic-container">
-	
-	
-		<div class="pro-title">
-			<h1>HABILIDADES Y HERRAMIENTAS</h1>
-        </div>
-		
-
-    </section>
+	// Call the function when the page loads
+	registerVisit();
+	</script>
 	
 	
 </body>

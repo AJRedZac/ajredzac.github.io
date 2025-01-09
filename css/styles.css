@@ -1,8 +1,8 @@
 
 
 body {
-    background-color: #000000;
-    color: #F6F8FF;
+    background-color: #131320;
+    color: #E6E6E6;
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000000; /* Puedes cambiar el color si es necesario */
+    background-color: #131320; /* Puedes cambiar el color si es necesario */
     padding: 10px;
     width: 100%;
     top: 0;
@@ -40,7 +40,7 @@ header li {
 
 /* Estilos para los enlaces */
 header a {
-    color: #F6F8FF;
+    color: #3777FF;
     text-decoration: none;
     font-size: 30px;
     font-weight: bold;
@@ -49,16 +49,18 @@ header a {
 
 /* Efecto hover para los enlaces */
 header a:hover {
-    color: #CB154C; /* Cambia de color al pasar el mouse */
+    color: #E6E6E6; /* Cambia de color al pasar el mouse */
 }
 
 header a:active{
-	color: #FF5588;
+	color: #C9A91D;
 }
 
 header a:visited{
-	color:#e92c64
+	color:#C9A91D
 }
+
+
 /* Responsive design para pantallas pequeñas */
 @media (max-width: 768px) {
     header ul {
@@ -70,6 +72,101 @@ header a:visited{
     }
 }
 
+/* index styles*/
+.main-container {
+	
+	display: flex;
+	flex-flow: row wrap;
+    justify-content: center;
+	align-items: center;
+	align-content: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+
+.main-left{
+	
+    
+	flex: 1;
+}
+
+.main-left p{
+	
+    margin-left: 13%;
+	margin-top: 0;
+	margin-bottom: 2%;
+	margin-right: 0;
+	font-size: 25px;
+	
+}
+.main-right {
+  
+    flex: 1;
+}
+
+.main-right img {
+   display: block;
+   
+   max-height: 100vh; /* maintain aspect ratio*/
+   margin-left: auto;
+   
+}
+
+
+h1.main{
+	font-size: 80px;
+	color: #3777FF;
+	margin-left:13%;
+	margin-top:0;
+	margin-bottom:0;
+}
+
+h2.main{
+	font-size: 60px;
+	color: #E6E6E6;
+	margin-top:0;
+	
+	margin-bottom:0;
+	margin-left:13%;
+}
+
+
+.main-btns {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	margin-left:13%;
+}
+
+.download-button{
+	background-color: #3777FF;
+	color: #E6E6E6;
+	padding-top:15px;
+	padding-bottom:15px;
+	
+	width: 48%;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.download-button:hover{
+	color: #3777FF;
+	background-color: #E6E6E6;
+	text-decoration: none;
+}
+
+.download-button:active{
+	color: #E6E6E6;
+	background-color: #C9A91D;
+	text-decoration: none;
+}
+
+/* gallery styles */
 
 section {
     scroll-snap-align: center;
@@ -78,6 +175,7 @@ section {
     justify-content: center;
     align-items: center;
 }
+
 
 section.gallery{
 	
@@ -103,18 +201,7 @@ section.gallery{
 }
 
 
-.main-container {
-	
-	display: flex;
-	flex-flow: row wrap;
-    justify-content: center;
-	align-items: center;
-	align-content: center;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-}
+
 
 ..main-container-game {
 	
@@ -130,22 +217,13 @@ section.gallery{
     top: 0;
 }
 
-.main-left{
-	
-    
-	flex: 1;
-    
-}
 
 .main-left-game-info{
 	flex: 1;
 }
 
 
-.main-right {
-  
-    flex: 2.5;
-}
+
 
 .main-right-game {
   
@@ -157,17 +235,12 @@ section.gallery{
     flex: 1;
 }
 
-.main-left img {
-   display: block;
-   
-   max-height: 100vh; /* maintain aspect ratio*/
-   margin-left: auto;
-   
-}
 
 .main-left-game-info img{
    display: block;
    max-height: 70vh;
+   
+   
    
 }
 .pro-container {
@@ -260,35 +333,23 @@ section.gallery{
 	display: flex;
 }
 
-h1.main{
-	font-size: 90px;
-	color: #e92c64;
-	margin-bottom: 0;
-}
 
-h2.main{
-	font-size: 65px;
-	color: #F6F8FF;
-	margin-left:20px;
-	margin-top:0;
-}
 
 h1{
 	font-size: 60px;
-	color: #e92c64;
-	margin-left: 20px;
+	color: #3777FF;
 }
 
 h2{
 	font-size: 40px;
-	color: #e92c64;
+	color: #3777FF;
 	
 	margin-bottom:0;
 	
 }
 h3{
 	font-size: 30px;
-	color: #F6F8FF;
+	color: #E6E6E6;
 	margin-bottom:0;
 	margin-top:0;
 }
@@ -312,10 +373,10 @@ p.gameDescription {
 
 .keyword {
 	font-weight: bold;
-    color: #4fe1ea;
+    color: #C9A91D;
 }
 
-/* Estilos para el enlace en su estado normal */
+/* Estilos para el enlace en su estado normal 
 a {
     color: #4fe1ea;
     text-decoration: underline;
@@ -323,7 +384,7 @@ a {
 }
 
 a:hover {
-    color: #CB154C;
+    color: #C9A91D;
     text-decoration: none;
 }
 
@@ -332,31 +393,7 @@ a:active {
 }
 
 a:visited {
-    color: #e92c64;
+    color: #3777FF;
 }
+*/
 
-.download-button{
-	margin-top:10%;
-	background-color: #CB154C;
-	color: #F6F8FF;
-	padding-left: 100px;
-	padding-right: 100px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-size: 30px;
-	font-weight: bold;
-	text-align: center;
-	text-decoration: none;
-}
-
-.download-button:hover{
-	color: #F6F8FF;
-	background-color: #e92c64;
-	text-decoration: none;
-}
-
-.download-button:active{
-	color: #e92c64;
-	background-color: #F6F8FF;
-	text-decoration: none;
-}
