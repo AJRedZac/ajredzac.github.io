@@ -25,26 +25,37 @@
     <section class="main-container">
         
         
-        <!-- Sección derecha con el texto -->
+        <!--Sección derecha con el texto -->
         <div class="main-left">
 			<h2 class="main">Desarrollador de Videojuegos</h2>
 			<h1 class="main">ALVARO J. REDONDO Z.</h1>
-			<p> Soy un profesional con más de 6 años de experiencia en desarrollo de software, comprometido con alcanzar los más altos estándares de calidaden cada proyecto.
-			    Mi objetivo es crear videojuegos innovadores que destaquen por su creatividad. 
-				La idea es conectar a las personas a través de experiencias de <span class="keyword">entretenimiento auténtico</span>. </p>
+			<p> Soy un desarrollador de videojuegos con más de seis años de experiencia en desarrollo de software. 
+			Me especializo en gameplay programming y diseño de niveles, creando experiencias inmersivas que fusionan creatividad y tecnología.
+			Mi objetivo es diseñar videojuegos que desafíen las expectativas de los jugadores y los sumerjan en mundos memorables.</p>
 			<div class="main-btns">
-				<button href="" class="download-button" >CONTRATAR</button>
-				<button href="" class="download-button" >DESCARGAR CV</button>
+				<button href="" class="download-button" >VER PROYECTOS</button>
+				<button href="" class="download-button" >DESCARGAR MI CV</button>
 			</div>
         </div>
 		
-		<!-- Sección izquierda con la imagen -->
-        <div class="main-right">
-            <img src="images/myImageOrange.png" alt="Foto" class="main-image">
-        </div>
-		
+		<div class="main-right">
+		<!-- Contenedor del modelo 3D -->
+		<div id="canvas-container"></div>
+		</div>
 		
     </section>
+	
+	
+	<script type="importmap">
+	{
+		"imports": {
+		"three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js",
+		"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+		}
+	}	
+	</script>
+	<!-- Importar el script externo -->
+	<script type="module" src="js/modelViewer.js"></script>
 	
 	<script>
 		async function registerVisit() {

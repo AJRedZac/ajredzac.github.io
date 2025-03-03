@@ -1,8 +1,8 @@
 
 
 body {
-    background-color: #131320;
-    color: #E6E6E6;
+    background-color: #000000;
+    color: #E3E8E8;
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
     padding: 0;
@@ -17,7 +17,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #131320; /* Puedes cambiar el color si es necesario */
+    background-color: transparent; /* Puedes cambiar el color si es necesario */
     padding: 10px;
     width: 100%;
     top: 0;
@@ -40,16 +40,16 @@ header li {
 
 /* Estilos para los enlaces */
 header a {
-    color: #3777FF;
+    color: #6647FF;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 /* Efecto hover para los enlaces */
 header a:hover {
-    color: #E6E6E6; /* Cambia de color al pasar el mouse */
+    color: #E3E8E8; /* Cambia de color al pasar el mouse */
 }
 
 header a:active{
@@ -57,7 +57,7 @@ header a:active{
 }
 
 header a:visited{
-	color:#C9A91D
+	color:#6647FF
 }
 
 
@@ -81,7 +81,6 @@ header a:visited{
 	align-items: center;
 	align-content: center;
     width: 100%;
-    height: 100%;
     left: 0;
     top: 0;
 }
@@ -98,7 +97,7 @@ header a:visited{
 	margin-top: 0;
 	margin-bottom: 2%;
 	margin-right: 0;
-	font-size: 25px;
+	font-size: 20px;
 	
 }
 .main-right {
@@ -116,16 +115,16 @@ header a:visited{
 
 
 h1.main{
-	font-size: 80px;
-	color: #3777FF;
+	font-size: 60px;
+	color: #6647FF;
 	margin-left:13%;
 	margin-top:0;
 	margin-bottom:0;
 }
 
 h2.main{
-	font-size: 60px;
-	color: #E6E6E6;
+	font-size: 40px;
+	color: #E3E8E8;
 	margin-top:0;
 	
 	margin-bottom:0;
@@ -141,13 +140,13 @@ h2.main{
 }
 
 .download-button{
-	background-color: #3777FF;
-	color: #E6E6E6;
+	background-color: #6647FF;
+	color: #E3E8E8;
 	padding-top:15px;
 	padding-bottom:15px;
 	
-	width: 48%;
-	font-size: 30px;
+	width: 45%;
+	font-size: 25px;
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
@@ -155,13 +154,13 @@ h2.main{
 }
 
 .download-button:hover{
-	color: #3777FF;
-	background-color: #E6E6E6;
+	color: #6647FF;
+	background-color: #E3E8E8;
 	text-decoration: none;
 }
 
 .download-button:active{
-	color: #E6E6E6;
+	color: #E3E8E8;
 	background-color: #C9A91D;
 	text-decoration: none;
 }
@@ -337,19 +336,19 @@ section.gallery{
 
 h1{
 	font-size: 60px;
-	color: #3777FF;
+	color: #6647FF;
 }
 
 h2{
 	font-size: 40px;
-	color: #3777FF;
+	color: #6647FF;
 	
 	margin-bottom:0;
 	
 }
 h3{
 	font-size: 30px;
-	color: #E6E6E6;
+	color: #E3E8E8;
 	margin-bottom:0;
 	margin-top:0;
 }
@@ -359,6 +358,7 @@ p {
     font-size: 22px; /* Reduce un poco el tamaño de la fuente para más compresión */
     margin: 35px; /* Reduce el espacio entre párrafos */
     text-align: justify;
+	line-height: 1.6;
 }
 
 p.gameDescription {
@@ -393,7 +393,19 @@ a:active {
 }
 
 a:visited {
-    color: #3777FF;
+    color: #6647FF;
 }
 */
 
+#canvas-container {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+canvas {
+    display: block;
+    border-radius: 10px;
+}
