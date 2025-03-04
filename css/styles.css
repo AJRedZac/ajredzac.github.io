@@ -410,3 +410,42 @@ canvas {
     display: block;
     border-radius: 10px;
 }
+
+.project-right{
+	
+    
+	flex: 1;
+}
+
+.project-right p{
+	
+    margin-left: 0;
+	margin-top: 0;
+	margin-bottom: 2%;
+	margin-right: 13%;
+	font-size: 20px;
+	
+	
+}
+
+.project-left {
+	height: 100vh;
+    flex: 1;
+}
+
+.project-right h1{
+	font-size: 60px;
+	color: #BA181B;
+	margin-right:13%;
+	margin-top:0;
+	margin-bottom:0;
+}
+
+.project-right h2{
+	font-size: 40px;
+	color: #E3E8E8;
+	margin-top:0;
+	
+	margin-bottom:0;
+	margin-right:13%;
+}

@@ -30,11 +30,13 @@
 			<h2 class="main">Desarrollador de Videojuegos</h2>
 			<h1 class="main">ALVARO J. REDONDO Z.</h1>
 			<p> Soy un desarrollador de videojuegos con más de seis años de experiencia en desarrollo de software. 
-			Me especializo en gameplay programming y diseño de niveles, creando experiencias inmersivas que fusionan creatividad y tecnología.
-			Mi objetivo es diseñar videojuegos que desafíen las expectativas de los jugadores y los sumerjan en mundos memorables.</p>
+			    Me especializo en programación de jugabilidad y diseño de niveles, con un enfoque en innovación y armonía ludonarrativa.
+				Mi pasión es crear videojuegos que desafíen las expectativas de los jugadores y los lleven a mundos inolvidables.</p>
 			<div class="main-btns">
 				<button href="" class="download-button" >VER PROYECTOS</button>
-				<button href="" class="download-button" >DESCARGAR MI CV</button>
+				
+				<button class="download-button" id= "downloadCvBtn">DESCARGAR MI CV</button>
+				
 			</div>
         </div>
 		
@@ -45,6 +47,35 @@
 		
     </section>
 	
+	 <section class="main-container">
+        
+        
+        <!--Sección derecha con el texto -->
+		<div class="project-left">
+			<iframe width="640" height="360" src="https://www.youtube.com/watch?v=CMvrMTmuJuA" frameborder="0" allowfullscreen></iframe>
+		</div>
+        <div class="project-right">
+			<h2>Proyecto en Desarrollo</h2>
+			<h1>LED ASTRAY</h1>
+			<br><br>
+			<p> Edmundo Montenegro, un investigador privado de poca monta, vive atrapado en el pasado y sepultado por deudas. 
+			Su suerte parece cambiar cuando la enigmática y acaudalada Verónica Vélez entra en su despacho con una oferta irresistible: 
+			una estancia con todos los gastos pagados en el lujoso Gran Hotel Villefort, a cambio de un trabajo sencillo.</p>
+			
+			<p>Sin embargo, en cuanto Edmundo cruza el umbral, la farsa se hace evidente… pero ya es demasiado tarde. 
+			Las puertas del hotel se cierran tras él con una fuerza inamovible. Perseguido por abominaciones demoníacas y torturado por una entidad que acecha su mente, apenas logra sobrevivir. 
+			En el último momento, es salvado por el Exorcista Abel Aburto y su joven asistente, Nina Nava, quienes parecen conocer la verdadera naturaleza del mal que habita el Villefort.</p>
+
+			<p>
+			Con la ayuda de los exorcistas y guiado por su sexto sentido, Edmundo se adentra en los oscuros pasillos del hotel en busca de respuestas. 
+			Pero cada revelación solo lo acerca más a la locura… y al propósito real de su invitación a este lugar maldito. 
+			</p>
+			
+        </div>
+		
+		
+		
+    </section>
 	
 	<script type="importmap">
 	{
@@ -54,9 +85,11 @@
 		}
 	}	
 	</script>
-	<!-- Importar el script externo -->
+	<!-- Importar el script externo 
 	<script type="module" src="js/modelViewer.js"></script>
 	
+	
+	<!--
 	<script>
 		async function registerVisit() {
 			// Prepare visit data
@@ -68,7 +101,6 @@
 				protocol: window.location.protocol.replace(':', ''), // Protocol (HTTP/HTTPS)
 				method: 'GET',                                // HTTP method used by the browser
 			};
-
 			try {
 				// Send a POST request to the backend
 				const response = await fetch('https://mysimpleserver-aebu.onrender.com/register-visit', {
@@ -87,11 +119,27 @@
 			} catch (error) {
 				console.error('Error registering visit:', error);
 			}
-  }
+		}
 
-	// Call the function when the page loads
-	registerVisit();
+		// Call the function when the page loads
+		registerVisit();
 	</script>
+	-->
+	<script>
+document.getElementById("downloadCvBtn").addEventListener("click", function() {
+    fetch("files/AlvaroRedondoCV2025GameDevEnglish.pdf") // Carga el archivo
+        .then(response => response.blob()) // Convierte en blob (archivo binario)
+        .then(blob => {
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob); // Crea un enlace temporal
+            link.download = "AlvaroRedondoCV.pdf"; // Nombre del archivo al descargar
+            document.body.appendChild(link);
+            link.click(); // Simula el clic para descargar
+            document.body.removeChild(link); // Limpia el DOM
+        })
+        .catch(error => console.error("Error al descargar el archivo:", error));
+});
+</script>
 	
 	
 </body>
