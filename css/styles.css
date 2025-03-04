@@ -57,7 +57,7 @@ header a:active{
 }
 
 header a:visited{
-	color:#6647FF
+	color:#C9A91D
 }
 
 
@@ -99,9 +99,10 @@ header a:visited{
 	margin-right: 0;
 	font-size: 20px;
 	
+	
 }
 .main-right {
-  
+	height: 100vh;
     flex: 1;
 }
 
@@ -399,11 +400,11 @@ a:visited {
 
 #canvas-container {
     width: 100%;
-    height: 500px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 canvas {
     display: block;
