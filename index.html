@@ -52,7 +52,7 @@
         
         <!--Sección derecha con el texto -->
 		<div class="project-left">
-			<iframe width="640" height="360" src="https://www.youtube.com/watch?v=CMvrMTmuJuA" frameborder="0" allowfullscreen></iframe>
+			<iframe src="https://www.youtube.com/embed/CMvrMTmuJuA" allowfullscreen></iframe>
 		</div>
         <div class="project-right">
 			<h2>Proyecto en Desarrollo</h2>
@@ -85,7 +85,7 @@
 		}
 	}	
 	</script>
-	<!-- Importar el script externo 
+	<!-- Importar el script externo -->
 	<script type="module" src="js/modelViewer.js"></script>
 	
 	
@@ -126,19 +126,19 @@
 	</script>
 	-->
 	<script>
-document.getElementById("downloadCvBtn").addEventListener("click", function() {
-    fetch("files/AlvaroRedondoCV2025GameDevEnglish.pdf") // Carga el archivo
-        .then(response => response.blob()) // Convierte en blob (archivo binario)
-        .then(blob => {
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob); // Crea un enlace temporal
-            link.download = "AlvaroRedondoCV.pdf"; // Nombre del archivo al descargar
-            document.body.appendChild(link);
-            link.click(); // Simula el clic para descargar
-            document.body.removeChild(link); // Limpia el DOM
-        })
-        .catch(error => console.error("Error al descargar el archivo:", error));
-});
+		document.getElementById("downloadCvBtn").addEventListener("click", function() {
+			fetch("files/AlvaroRedondoCV2025GameDevEnglish.pdf") // Carga el archivo
+			.then(response => response.blob()) // Convierte en blob (archivo binario)
+			.then(blob => {
+				const link = document.createElement("a");
+				link.href = URL.createObjectURL(blob); // Crea un enlace temporal
+				link.download = "AlvaroRedondoCV.pdf"; // Nombre del archivo al descargar
+				document.body.appendChild(link);
+				link.click(); // Simula el clic para descargar
+				document.body.removeChild(link); // Limpia el DOM
+			})
+			.catch(error => console.error("Error al descargar el archivo:", error));
+		});
 </script>
 	
 	

@@ -14,10 +14,11 @@ body {
 
 /* Estilos del header */
 header {
+	
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: transparent; /* Puedes cambiar el color si es necesario */
+    background-color: #000000; /* Puedes cambiar el color si es necesario */
     padding: 10px;
     width: 100%;
     top: 0;
@@ -428,10 +429,7 @@ canvas {
 	
 }
 
-.project-left {
-	height: 100vh;
-    flex: 1;
-}
+
 
 .project-right h1{
 	font-size: 60px;
@@ -448,4 +446,21 @@ canvas {
 	
 	margin-bottom:0;
 	margin-right:13%;
+}
+
+/* Contenedor de la sección del proyecto */
+.project-left {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centra el video dentro del contenedor */
+    align-items: center;
+    padding: 15px; /* Espacio alrededor del video */
+}
+
+/* Ajusta el tamaño del video */
+.project-left iframe {
+    width: 100%; /* Ocupa todo el ancho disponible en el contenedor */
+    max-width: 800px; /* Ajusta el tamaño máximo del video */
+    height: 600px; /* Altura proporcional (16:9) */
+    border-radius: 10px; /* Bordes redondeados opcionales */
 }
