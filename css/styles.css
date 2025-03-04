@@ -1,4 +1,7 @@
-
+:root {
+    --primary-color: #6647FF; /* Morado (Landing Page) */
+	--primary-color-highlight: #AA99FF;
+}
 
 body {
     background-color: #000000;
@@ -41,7 +44,7 @@ header li {
 
 /* Estilos para los enlaces */
 header a {
-    color: #6647FF;
+    color: var(--primary-color);
     text-decoration: none;
     font-size: 25px;
     font-weight: bold;
@@ -54,11 +57,11 @@ header a:hover {
 }
 
 header a:active{
-	color: #E3E8E8;
+	color: var(--primary-color-highlight);
 }
 
 header a:visited{
-	color:#6647FF
+	color: var(--primary-color);
 }
 
 
