@@ -19,9 +19,9 @@
                  ☰
             </button>
             <ul class="navbar-menu">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="gameGallery.html">Galería</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gameGallery.html">Galery</a></li>
+                <li><a href="contacto.html">Contact</a></li>
 				
             </ul>
         </nav>
@@ -31,17 +31,18 @@
         
         <!--Sección derecha con el texto -->
         <div class="main-left">
-			<h2 class="main">Full-stack Software Developer</h2>
+			<h2 class="main">SOFTWARE DEVELOPMENT AND DESIGN</h2>
 			<h1 class="main">ALVARO J. REDONDO Z.</h1>
-			<p> Software engineer with over 7 years of experience in full-stack development across public institutions, 
-				local startups, and international corporations. Skilled in backend architecture, API integration, 
+			<p> Computer System's Engineer and Master in Game Design and Development,
+				with over 7 years of experience in full-stack development across local startups, international corporations and public institutions. 
+				Highly skilled in backend architecture, API integration, 
 				cloud deployment, and game development. Proven ability to deliver high-quality software in high-pressure environments. 
-				Recently completed a master’s degree in Game Design and Development and currently working on an independent game project 
-				using Unreal Engine 5. Passionate about automation, AI, and interactive storytelling.</p>
+				Currently, I'm working on an independent game project 
+				using Unreal Engine 5. </p>
 			<div class="main-btns">
 				<!--button href="" class="download-button" >VER PROYECTOS</button-->
 				
-				<button class="download-button" id= "downloadCvBtn">DESCARGAR MI CV</button>
+				<button class="download-button" id= "downloadCvBtn">DOWNLOAD MY CV</button>
 				
 			</div>
         </div>
@@ -61,17 +62,20 @@
 			<iframe src="https://www.youtube.com/embed/3BXImyLEt6w" allowfullscreen></iframe>
 		</div>
         <div class="project-right">
-			<h2>En Desarrollo</h2>
+			<h2>In Development</h2>
 			<h1>LED ASTRAY</h1>
 			<br><br>
-			<p> Edmundo Montenegro, un investigador privado sin suerte, recibe una oferta inesperada: 
-			una estancia gratuita en el lujoso Gran Hotel Villefort a cambio de un trabajo sencillo. 
-			Sin embargo, al cruzar sus puertas, se da cuenta de que ha caído en una trampa mortal.
-			Atrapado en el ostentoso hotel, Edmundo es perseguido por criaturas monstruosas y atormentado por visiones que desgarran su cordura. </p>
-			<p>Cuando todo parece perdido, un par exorcistas, Abel Aburto y Nina Nava, lo rescatan y le revelan la verdad: 
-			el Villefort está infestado de demonios. 
-			Con su sexto sentido y la ayuda de los exorcistas, Edmundo deberá enfrentar los secretos del hotel 
-			y descifrar su propósito en este siniestro juego antes de que sea demasiado tarde.
+			<p> Edmundo Montenegro, an unlucky private investigator, receives an unexpected offer: 
+				a free stay at the luxurious Gran Hotel Villefort and a generous pay
+				in exchange for a simple job. However, upon entering the Hotel, 
+				he realizes he has fallen into a deadly trap. 
+				Edmundo finds himself hunted by monstrous creatures and tormented by insane visions.</p>
+			<p>When all seems lost, a pair of exorcists, 
+				Abel Aburto and Nina Nava, rescue him and reveal the truth: 
+				the Villefort is infested with demons. 
+				With his sixth sense and the exorcists' help, 
+				Edmundo must confront the hotel's secrets and decipher 
+				his purpose in this sinister game before it's too late.
 			</p>
 			
 			<!--div class="action-btns">
@@ -86,6 +90,8 @@
 		
 		
     </section>
+
+	
 	
 	<script type="importmap">
 	{
@@ -137,7 +143,7 @@
 	-->
 	<script>
 		document.getElementById("downloadCvBtn").addEventListener("click", function() {
-			fetch("files/AlvaroRedondoCV2025GameDevEnglish.pdf") // Carga el archivo
+			fetch("files/AlvaroRedondoCV2025English.pdf") // Carga el archivo
 			.then(response => response.blob()) // Convierte en blob (archivo binario)
 			.then(blob => {
 				const link = document.createElement("a");
