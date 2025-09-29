@@ -7,17 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body>
     <header>
-        <nav>
-			<ul>
-				<li><a href="index.html">Sobre Mí</a></li>
-				<li><a href="gameGallery.html">Galería</a></li>
-				<li><a href="#">Contacto</a></li>
+        <nav class="navbar">
+            
+            <button class="navbar-toggle" aria-label="Toggle menu">
+                 ☰
+            </button>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gameGallery.html">Galery</a></li>
+                <li><a href="contacto.html">Contact</a></li>
 				
-			</ul>
-		</nav>
+            </ul>
+        </nav>
     </header>
 
 	<section class="main-container-game">
@@ -29,7 +34,7 @@
         <!-- Sección derecha con el texto -->
         <div class="main-right-game">
 			<h2>Pong</h2>
-			<h3>Diciembre 2024</h3>
+			<h3>December 2024</h3>
 			<p class="gameDescription" >A simple version of Pong for PC. Made in Godot with C# scripts.<br>
 
 										Use W and S to control the Paddle (Player 1) on the left.<br>
@@ -38,7 +43,7 @@
 										Press P to Open the Pause Menu.<br>
 
 										Have fun :)</p>
-			<a href="https://github.com/AJRedZac/pong/releases/download/v1.0.0/pong.exe" class="download-button" >DOWNLOAD</a>
+			<button onclick="location.href='https://github.com/AJRedZac/pong/releases/download/v1.0.0/pong.exe'" class="download-button" type="button">DOWNLOAD GAME</a>
         </div>
 		
 		
