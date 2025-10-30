@@ -3,17 +3,17 @@
         {
             "titulo":"El Conde de Montecristo",
             "autor":"Alejandro Dumas",
-            "año": "1886"
+            "año": 1886
         },
         {
             "titulo":"El Resplandor",
             "autor":"Stephen King",
-            "año": "1978"
+            "año": 1978
         },
         {
             "titulo":"Harry Potter",
             "autor":"J. K. Rowling",
-            "año": "1993"
+            "año": 1993
         }
     ]
 }
