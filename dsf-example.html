@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            
+            <button class="navbar-toggle" aria-label="Toggle menu">
+                 ☰
+            </button>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gameGallery.html">Gallery</a></li>
+                <li><a href="contacto.html">Contact</a></li>
+				
+            </ul>
+        </nav>
+    </header>
+
+	<section class="main-container-game">
+
+        <div class="main-left-game-info">
+            <div class="dfs-container">
+                <div class="dfs-grid" id="dfsGrid"></div>
+            </div>
+        </div>
+
+        <div class="main-right-game dfs-controls">
+            <h2>Depth First Search</h2>
+
+            <p class="gameDescription">
+                Selecciona una celda como punto inicial y ejecuta el algoritmo DFS para
+                visualizar el recorrido paso a paso.
+            </p>
+
+            <div class="dfs-buttons">
+                <div class="dfs-speed-controls">
+                    <div class="dfs-speed-info">
+                        <label class="dfs-speed-label" for="speedSlider">
+                            Velocidad
+                        </label>
+                        <span class="dfs-speed-value" id="speedValue">5</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        id="speedSlider" 
+                        class="dfs-speed-slider"
+                        min="1" 
+                        max="10" 
+                        value="5"
+                    />
+                </div>
+                
+                
+                
+                
+                
+                <button class="dfs-run-button" id="runDfs" disabled>
+                    Ejecutar DFS
+                </button>
+                <button class="dfs-run-button" id="resetGrid">
+                    Reiniciar tablero
+                </button>
+            </div>
+
+            
+        </div>
+
+    </section>
+
+
+    <!-- Script principal -->
+    <script src="js/dsf.js"></script>
+</body>
+</html>
