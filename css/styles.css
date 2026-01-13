@@ -436,9 +436,6 @@ canvas {
    DFS VISUALIZER
    =========================== */
 
-/* ===========================
-   DFS VISUALIZER
-   =========================== */
 
 .dfs-container {
     width: 70vh;
@@ -448,7 +445,7 @@ canvas {
     align-items: center;
 }
 
-/* Grilla */
+
 .dfs-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -458,7 +455,7 @@ canvas {
     height: 100%;
 }
 
-/* Celda */
+
 .dfs-cell {
     background-color: var(--primary-color-highlight);
     border-radius: 6px;
@@ -471,24 +468,24 @@ canvas {
     box-shadow: 0 0 10px rgba(170, 153, 255, 0.6);
 }
 
-/* Estado inicial */
+
 .dfs-cell.start {
     outline: 3px solid var(--accent-color);
     box-shadow: 0 0 15px rgba(255, 255, 255, 1);
 }
 
-/* Visitado */
+
 .dfs-cell.visited {
     background-color: var(--primary-color);
     box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
 }
 
-/* Nodo activo */
+
 .dfs-cell.active {
     background-color: var(--accent-color);
 }
 
-/* Controles */
+
 .dfs-controls {
     display: flex;
     flex-direction: column;
@@ -501,7 +498,7 @@ canvas {
     justify-content: flex-start;
 }
 
-/* Botón DFS */
+
 .dfs-run-button {
     width: 45%;
     margin: 1%;

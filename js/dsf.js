@@ -15,7 +15,7 @@ let cells = [];
 let start = null;
 let running = false;
 
-/* Crear imagen */
+
 function createImage() {
     gridElement.innerHTML = "";
     image = [];
@@ -48,7 +48,7 @@ function createImage() {
     }
 }
 
-/* Colores de tu paleta */
+
 function randomColor() {
     const palette = [
         "#C7E8F3", "#BF9ACA"
@@ -57,7 +57,7 @@ function randomColor() {
 }
 
 
-/* Seleccionar punto inicial */
+
 function selectStart(cell, r, c) {
     if (running) return;
 
@@ -68,14 +68,14 @@ function selectStart(cell, r, c) {
     runButton.disabled = false;
 }
 
-/* Limpiar estados visuales */
+
 function clearMarks() {
     document.querySelectorAll(".dfs-cell").forEach(c => {
         c.classList.remove("start", "visited", "active");
     });
 }
 
-/* Ejecutar flood fill */
+
 async function runFloodFill() {
     if (!start || running) return;
 
@@ -95,7 +95,7 @@ async function runFloodFill() {
     running = false;
 }
 
-/* Tu DFS real con animación */
+
 async function dfs(r, c, og, color) {
     if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
     if (image[r][c] !== og) return;
@@ -117,7 +117,7 @@ async function dfs(r, c, og, color) {
     await dfs(r, c + 1, og, color);
 }
 
-/* Delay visual */
+
 function delay() {
     return new Promise(resolve => setTimeout(resolve, animationDelay));
 }
