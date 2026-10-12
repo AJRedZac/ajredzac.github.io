@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Service Ticketing Kiosk — Case Study</title>
+    <meta name="description" content="Case study: a Java 21 and JavaFX kiosk application integrating a proprietary native payment SDK, Windows thermal printing and REST backend services.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ajredzac.github.io/kiosk-case-study.html">
+    <meta property="og:title" content="Self-Service Ticketing Kiosk — Case Study">
+    <meta property="og:description" content="A Java 21 and JavaFX kiosk application integrating a proprietary native payment SDK and Windows thermal printing — and what its failure modes taught me.">
+    <meta property="og:image" content="https://ajredzac.github.io/images/myImage.jpg">
+    <meta name="twitter:card" content="summary">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="data:,">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+
+            <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
+                 ☰
+            </button>
+            <ul class="navbar-menu" id="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="kiosk-case-study.html">Work</a></li>
+                <li><a href="gameGallery.html">Gallery</a></li>
+                <li><a href="contacto.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article class="doc">
+
+            <h1>Self-Service Ticketing Kiosk</h1>
+            <p class="doc-subtitle">Java 21 · JavaFX · Spring Boot · native SDK integration · Windows printing</p>
+            <p class="doc-role">Primary developer · 2026</p>
+
+            <hr class="doc-rule">
+
+            <h2>The problem</h2>
+            <p class="doc-lede">
+                Travelers at intercity bus terminals queue to buy tickets from an agent. The kiosk
+                removes the queue — but to do that, an unattended machine has to take card payments,
+                print a ticket the traveler can board with, and stay correct when a passenger walks
+                away mid-purchase. There is no operator to recover from a bad state. Whatever the
+                software does when something fails is the final answer.
+            </p>
+
+            <h2>Constraints</h2>
+            <ul>
+                <li>No operator at the machine. Every failure path has to end somewhere a traveler
+                    can act on without help.</li>
+                <li>The payment terminal is driven by a closed vendor SDK: a proprietary JAR that
+                    loads a native Windows DLL internally. Its internals are not inspectable and it
+                    cannot be run in CI.</li>
+                <li>Money is captured on the device; the record of the sale lives in a cloud backend.
+                    There is no transaction spanning both.</li>
+                <li>Prices, fare rules and printed footer restrictions are decided by the backend,
+                    not the kiosk.</li>
+            </ul>
+
+            <h2>What I built</h2>
+            <ul>
+                <li>A four-layer desktop application in Java 21 and JavaFX, running on Spring Boot
+                    with the HTTP server disabled — the framework was there for dependency injection
+                    and its HTTP client, not to serve requests.</li>
+                <li>A multi-modality sales engine: reserved-seat, open-date, round-trip, and mixed
+                    trips that combine a reserved leg with an open one.</li>
+                <li>Two hardware integrations. Card payments go through a proprietary vendor JAR that
+                    loads a native Windows DLL internally. Thermal printing goes through the Windows
+                    print service, with printer status read separately from the vendor's native
+                    status API bound with JNA — reading real device state before committing to a
+                    print, rather than discovering a fault halfway through a ticket.</li>
+                <li>A thermal document renderer: five document types — reserved-seat, open and
+                    express tickets, payment voucher, travel-insurance receipt — sharing a common
+                    typographic skeleton, with the tax breakdown and footer restrictions driven
+                    entirely by backend data.</li>
+                <li>Event-driven peripheral telemetry reporting device health, system metrics and
+                    network latency, with thresholds configurable through application properties and
+                    environment configuration.</li>
+                <li>Session and inactivity management with two independent timers that cancel backend
+                    reservations when a traveler abandons the flow.</li>
+            </ul>
+
+            <h2>Three decisions worth explaining</h2>
+
+            <h3>1. A timeout that stops waiting is not a timeout that stops work</h3>
+            <p>
+                The kiosk would occasionally freeze during a card payment. The PIN pad is driven by a
+                vendor JAR that loads a native Windows DLL internally, and in certain device states
+                the native call simply never returned.
+            </p>
+            <p>
+                The obvious fix — wrapping the call in a future and calling <code>get</code> with a
+                timeout — does not work, and understanding why is the whole lesson. Java's
+                interruption is cooperative: it sets a flag that Java code checks. A thread parked
+                inside a native library checks nothing. Neither a timeout nor a cancel brings it
+                back. All you have achieved is that <em>you</em> stopped waiting. The thread is still
+                in there, still holding whatever it acquired.
+            </p>
+            <p>
+                That distinction matters because of what comes next: if you retry after such a
+                timeout, a second call enters the SDK while the first is still inside. That is no
+                longer a frozen screen — it is a poisoned transaction, with real money involved.
+            </p>
+            <p>
+                The fix had three parts. A single dedicated thread for every native call, so
+                serialization was structural rather than a convention someone had to remember. A busy
+                flag set by the native callable itself — raised on entry, cleared in a
+                <code>finally</code> only after the native call actually returns — rather than
+                inferred from the future's state, because the future's state is exactly the thing
+                that lies. And an atomic guard, so two callers arriving at the same instant could not
+                both pass the check and enqueue.
+            </p>
+            <p>
+                The watchdog was then reframed honestly: not recovery, but containment. There is no
+                in-process recovery from a hung native call. The watchdog frees the UI and blocks
+                further work against an SDK we know is compromised — and deliberately does not try to
+                tidy up after it, because reaching back into a library that is still executing is just
+                a second collision with extra steps.
+            </p>
+
+            <figure class="dg">
+                <figcaption class="dg-caption">
+                    Figure 1 — The concurrency boundary around the native SDK. Read top to bottom:
+                    each row is a thread or mechanism, and the note records what the watchdog
+                    deliberately does not do.
+                </figcaption>
+                <ul class="dg-lanes">
+                    <li class="dg-lane">
+                        <span class="dg-lane-h">JavaFX application thread</span>
+                        <span class="dg-lane-b">Starts the payment and never blocks on the device.
+                            Receives the outcome and updates the screen.</span>
+                    </li>
+                    <li class="dg-lane">
+                        <span class="dg-lane-h">Payment service</span>
+                        <span class="dg-lane-b">An atomic guard rejects a second concurrent
+                            operation outright. Suspends the inactivity timer and reads the device
+                            timeout from backend configuration before handing the call down.</span>
+                    </li>
+                    <li class="dg-lane">
+                        <span class="dg-lane-h">Single dedicated native thread</span>
+                        <span class="dg-lane-b">Every SDK call runs here, so serialization is
+                            structural. A busy flag is raised on entry and cleared only after the
+                            native call returns.</span>
+                    </li>
+                    <li class="dg-lane">
+                        <span class="dg-lane-h">Watchdog</span>
+                        <span class="dg-lane-b">Stops waiting, frees the UI, and blocks further work
+                            against the SDK.</span>
+                    </li>
+                </ul>
+                <p class="dg-note">
+                    What the watchdog does <em>not</em> do: stop the native call. It cannot. The
+                    thread stays inside the library, and nothing reaches back into it while it is
+                    there. Containment, not recovery.
+                </p>
+            </figure>
+
+            <h3>2. A card charge has no rollback, so the compensation has to be explicit</h3>
+            <p>
+                There is no distributed transaction available between a physical payment terminal and
+                a cloud backend. The money is captured by the device; the record of the sale lives in
+                the backend. The delivered flow prices the trip first, then runs a single direct sale
+                on the device, then confirms that sale in the backend. There is no pre-authorisation
+                hold and no separate commit step: when the device approves, the charge has happened.
+            </p>
+            <p>
+                So payment crossed two boundaries that fail independently: a proprietary native
+                device, and a remote system of record. What that buys is simplicity. What it costs is
+                that the two can disagree, and the useful question stops being what the happy path
+                looks like.
+            </p>
+            <p>
+                Some boundaries are easy. A declined card needs no compensation, because nothing was
+                captured. When the device reports a timeout and a reliable transaction reference
+                exists, compensation is attempted on a best-effort basis.
+            </p>
+            <p>
+                A hung native call is treated differently. Because the Java process cannot establish
+                the final device state or obtain a reliable transaction reference, it has no basis for
+                a safe in-process compensation — and not knowing the outcome is not the same as
+                knowing there was none. So the application contains the call, blocks concurrent
+                attempts so the ambiguity cannot be compounded by a duplicate, and leaves the
+                ambiguous outcome to be resolved against authoritative state rather than guessed at
+                locally.
+            </p>
+            <p>
+                Printing happens after the sale is confirmed, so a printer failure does not roll back
+                the sale. The confirmed transaction is preserved, and delivery falls back to a channel
+                that is actually available: a digital copy if one was already sent, otherwise the UI
+                shows the purchase reference number and directs the traveler to assisted service.
+            </p>
+            <p>
+                That is the part worth taking away, and it generalises well beyond kiosks. When a
+                remote system of record cannot confirm its own state, an automatic reversal is a guess
+                with money attached. Blind compensation is not safety — it is a second uncertain
+                write on top of the first. So the application avoided guessing: it contained the local
+                operation, prevented duplicate attempts, and deferred compensation until an
+                authoritative state could be established. I also documented a reconciliation design
+                for a later hardening phase.
+            </p>
+            <p>
+                Writing the payment as an ordered protocol instead of scattered error handling is
+                what made those boundaries legible in the first place — including the ones that were
+                deliberately left un-automated.
+            </p>
+
+            <figure class="dg">
+                <figcaption class="dg-caption">
+                    Figure 2 — Card payment: the delivered steps, then the principal failure
+                    boundaries shown here. Not an exhaustive list of exceptions. Every outcome is
+                    labelled, so nothing depends on colour alone.
+                </figcaption>
+                <ol class="dg-flow">
+                    <li class="dg-step">
+                        <span class="dg-step-t">1 · Quote the price</span>
+                        <span class="dg-step-d">The backend prices the trip before any money is
+                            involved. The kiosk does not compute fares.</span>
+                    </li>
+                    <li class="dg-step">
+                        <span class="dg-step-t">2 · Charge on the device</span>
+                        <span class="dg-step-d">A single direct sale through the vendor SDK,
+                            serialized behind the atomic guard from Figure 1. No pre-authorisation
+                            hold, no separate commit step.</span>
+                    </li>
+                    <li class="dg-step">
+                        <span class="dg-step-t">3 · Confirm the sale in the backend</span>
+                        <span class="dg-step-d">Once the device approves, the authorization data
+                            travels with the confirmation request.</span>
+                    </li>
+                    <li class="dg-step">
+                        <span class="dg-step-t">4 · Print</span>
+                        <span class="dg-step-d">The renderer selects the document type and prints
+                            from backend-supplied data, after confirmation.</span>
+                    </li>
+                </ol>
+                <ul class="dg-outcomes">
+                    <li class="dg-outcome">
+                        <span class="dg-outcome-k">Declined</span>
+                        <span class="dg-outcome-v">No captured payment.</span>
+                    </li>
+                    <li class="dg-outcome is-compensated">
+                        <span class="dg-outcome-k">Reported timeout</span>
+                        <span class="dg-outcome-v">Compensation attempted only when a reliable
+                            transaction reference exists.</span>
+                    </li>
+                    <li class="dg-outcome is-contained">
+                        <span class="dg-outcome-k">Ambiguous native outcome</span>
+                        <span class="dg-outcome-v">Contain locally; do not duplicate; reconcile from
+                            authoritative state.</span>
+                    </li>
+                    <li class="dg-outcome is-contained">
+                        <span class="dg-outcome-k">Print failure after confirmation</span>
+                        <span class="dg-outcome-v">Preserve the confirmed sale and guide the traveler
+                            to an available delivery channel.</span>
+                    </li>
+                </ul>
+            </figure>
+
+            <h3>3. Hardware you cannot test is hardware you cannot trust</h3>
+            <p>
+                Hardware boundaries were isolated behind interfaces expressed in domain terms —
+                nothing from the vendor SDK leaks through them — with production adapters and test
+                doubles for the integrations that required them, selected by Spring profile.
+            </p>
+            <p>
+                The most useful double is the least obvious one: an explicit <em>unavailable</em>
+                implementation that fails loudly. A silent mock in development lets you believe a
+                flow works when you have never touched the device. The unavailable one tells you that
+                you are running without hardware, instead of letting you find out at the terminal on
+                demo day.
+            </p>
+            <p>
+                The scenario doubles are where the real value is. They let you write the test for
+                <em>what happens if the payment device stops responding at the exact moment the
+                charge is in flight</em> — a case you cannot reproduce with real hardware no matter
+                how hard you try. They are also the only reason the hung-call behaviour in Figure 1
+                has tests at all: the vendor JAR cannot run in CI, so the boundary is the thing under
+                test.
+            </p>
+
+            <h2>Engineering practice</h2>
+            <p>
+                The project ran on spec-driven development: features were specified in
+                technology-agnostic documents with an explicit open-questions section, so ambiguity
+                became an artifact someone had to resolve rather than an assumption buried in code. I
+                wrote 26 architecture decision records. Static analysis was wired into the build — a
+                SonarQube project configuration with justified rule suppressions lives in the POM —
+                and dependency-scanning findings drove a framework upgrade that closed a set of
+                transitive CVEs. Security work included encrypting the payment SDK credentials at
+                rest with Windows DPAPI under current-user scope, stripping CR/LF out of logged
+                request data to close a log-forging finding, and masking personal data in integration
+                logs.
+            </p>
+
+            <h2>By the numbers</h2>
+            <dl class="doc-stats">
+                <dt>Production Java source files</dt>
+                <dd>366</dd>
+
+                <dt>Test Java source files</dt>
+                <dd>244</dd>
+
+                <dt>FXML views</dt>
+                <dd>40</dd>
+
+                <dt>Architecture decision records</dt>
+                <dd>26</dd>
+
+                <dt>Top-level specification directories</dt>
+                <dd>25</dd>
+            </dl>
+            <p class="doc-fine">
+                Counts were derived from a frozen internal release snapshot by listing tracked paths
+                and filtering by directory and extension. They are file counts, and they measure
+                scope rather than quality: a source-file count is not a design, and 244 test files is
+                not a coverage percentage — I am not claiming one. I have left out commit and
+                authorship totals on purpose; they are the easiest numbers to inflate and the least
+                informative, since one person committing under two identities makes any percentage a
+                matter of how you group the addresses.
+            </p>
+
+            <hr class="doc-rule">
+
+            <p class="doc-close">
+                Projects end. What stays is the reasoning — and this one taught me more about failure
+                modes than any system I have worked on.
+            </p>
+
+            <a class="doc-back" href="index.html">← Back to home</a>
+
+        </article>
+    </main>
+
+    <script src="js/navbar.js" defer></script>
+
+</body>
+</html>

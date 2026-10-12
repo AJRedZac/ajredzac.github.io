@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong</title>
+    <title>Depth-First Search — Alvaro J. Redondo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     
+    <link rel="icon" href="data:,">
+
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/navbar.css">
 </head>
@@ -13,11 +15,12 @@
     <header>
         <nav class="navbar">
             
-            <button class="navbar-toggle" aria-label="Toggle menu">
+            <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
                  ☰
             </button>
-            <ul class="navbar-menu">
+            <ul class="navbar-menu" id="navbar-menu">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="kiosk-case-study.html">Work</a></li>
                 <li><a href="gameGallery.html">Gallery</a></li>
                 <li><a href="contacto.html">Contact</a></li>
 				
@@ -25,6 +28,7 @@
         </nav>
     </header>
 
+	<main>
 	<section class="main-container-game">
 
         <div class="main-left-game-info">
@@ -34,29 +38,29 @@
         </div>
 
         <div class="main-right-game dfs-controls">
-            <h2>Depth First Search</h2>
+            <h1>Depth First Search</h1>
 
             <p class="gameDescription">
-                Selecciona una celda como punto inicial y ejecuta el algoritmo DFS para
-                visualizar el recorrido paso a paso.
+                Pick a cell as the starting point and run the DFS algorithm to
+                watch the traversal step by step.
             </p>
 
             <div class="dfs-buttons">
                 <div class="dfs-speed-controls">
                     <div class="dfs-speed-info">
                         <label class="dfs-speed-label" for="speedSlider">
-                            Velocidad
+                            Speed
                         </label>
                         <span class="dfs-speed-value" id="speedValue">5</span>
                     </div>
-                    <input 
-                        type="range" 
-                        id="speedSlider" 
+                    <input
+                        type="range"
+                        id="speedSlider"
                         class="dfs-speed-slider"
-                        min="1" 
-                        max="10" 
+                        min="1"
+                        max="10"
                         value="5"
-                    />
+                    >
                 </div>
                 
                 
@@ -64,10 +68,10 @@
                 
                 
                 <button class="dfs-run-button" id="runDfs" disabled>
-                    Ejecutar DFS
+                    Run DFS
                 </button>
                 <button class="dfs-run-button" id="resetGrid">
-                    Reiniciar tablero
+                    Reset grid
                 </button>
             </div>
 
@@ -75,9 +79,11 @@
         </div>
 
     </section>
+	</main>
 
 
-    
+
+    <script src="js/navbar.js" defer></script>
     <script src="js/dsf.js"></script>
 </body>
 </html>

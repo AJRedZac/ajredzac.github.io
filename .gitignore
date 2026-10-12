@@ -1,0 +1,9 @@
+# Documentos de trabajo internos: no forman parte del sitio publicado.
+# GitHub Pages sirve todo lo que se versiona, aunque no esté enlazado.
+/AGENT-BRIEF.md
+/AUDIT-*.md
+/METRICS-EVIDENCE.md
+
+# Artefactos de verificación (screenshots, salidas de sondas).
+/scratchpad/
+/artifacts/

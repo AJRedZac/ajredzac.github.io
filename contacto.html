@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Site</title>
+    <title>Contact — Alvaro J. Redondo</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     
+    <link rel="icon" href="data:,">
+
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/contacto.css">
     <link rel="stylesheet" href="css/navbar.css">
@@ -14,45 +16,44 @@
     <header>
         <nav class="navbar">
             
-            <button class="navbar-toggle" aria-label="Toggle menu">
+            <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
                  ☰
             </button>
-            <ul class="navbar-menu">
+            <ul class="navbar-menu" id="navbar-menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="gameGallery.html">Galery</a></li>
+                <li><a href="kiosk-case-study.html">Work</a></li>
+                <li><a href="gameGallery.html">Gallery</a></li>
                 <li><a href="contacto.html">Contact</a></li>
             </ul>
         </nav>
     </header>
 
 
-	<div class="contact-container">
-        
-        <p>Write me an email!</p>
-        <form class="contact-form"  id="contact-form" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+	<main class="contact-container">
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+        <h1>Contact</h1>
+        <p>Open to Java / backend and systems engineering roles. Email is the fastest way
+           to reach me — I read everything.</p>
 
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
+        <a class="contact-button" href="mailto:alvarorz94@hotmail.com">Write me an email</a>
 
-            <button class="contact-button" type="submit">Send</button>
-        </form>
-        <p id="response-msg"></p>
-      </div>
-    
-        
-    <script>
-        const toggle = document.querySelector('.navbar-toggle');
-        const menu = document.querySelector('.navbar-menu');
+        <ul class="contact-list">
+            <li>
+                <span class="contact-list-k">Email</span>
+                <a href="mailto:alvarorz94@hotmail.com">alvarorz94@hotmail.com</a>
+            </li>
+            <li>
+                <span class="contact-list-k">GitHub</span>
+                <a href="https://github.com/AJRedZac">github.com/AJRedZac</a>
+            </li>
+            <li>
+                <span class="contact-list-k">LinkedIn</span>
+                <a href="https://www.linkedin.com/in/alvarojredondoz/">linkedin.com/in/alvarojredondoz</a>
+            </li>
+        </ul>
+      </main>
 
-        toggle.addEventListener('click', () => {
-            menu.classList.toggle('open');
-        });
-    </script>
+    <script src="js/navbar.js" defer></script>
     
 </body>
 </html>

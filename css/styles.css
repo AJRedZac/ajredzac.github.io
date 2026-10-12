@@ -14,7 +14,6 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    scroll-snap-type: y mandatory;
 }
 
 
@@ -22,6 +21,9 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
+    /* Sin border-box, `width:100%` + `padding:10px` hacía que la cabecera
+       midiera 20px más que el viewport en todas las páginas. */
+    box-sizing: border-box;
     padding: 10px;
     background-color: var(--bg-dark);
     display: flex;
@@ -72,9 +74,17 @@ header a:visited {
 }
 
 /* MAIN SECTIONS */
+
+/* El scroll-snap se retiró: estaba declarado en `body`, pero el contenedor de
+   scroll real es el elemento raíz, así que Chrome nunca ajustaba — medido a
+   1366x768 y 1440x900, el scroll quedaba en la posición intermedia. Se
+   prometía un comportamiento que no existía. Scroll natural en todos los
+   tamaños.
+   `min-height` en lugar de `height`: una altura rígida corta el contenido si
+   crece. */
 section {
-    scroll-snap-align: center;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -122,7 +132,8 @@ section {
     box-shadow: 0 16px 24px rgba(216, 61, 255, 0.2);
 }
 
-.gallery-item a {
+.gallery-item a,
+.gallery-item .gallery-item-static {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -131,13 +142,15 @@ section {
     height: 100%;
 }
 
-.gallery-item a img {
+.gallery-item a img,
+.gallery-item .gallery-item-static img {
     width: 100%;
     height: auto;
     object-fit: cover;
 }
 
-.gallery-item a span {
+.gallery-item a span,
+.gallery-item .gallery-item-static span {
     
     padding: 0.25em;
     text-align: center;
@@ -186,19 +199,28 @@ button {
     margin-left: auto;
 }
 
-h1.main, h2.main {
+h1.main, .main-left .main-eyebrow {
     margin-left: 13%;
     margin-bottom: 0;
 }
 
 h1.main {
-    font-size: 60px;
+    /* Fluida: mantiene 60px en escritorio y evita que el nombre se corte en móvil. */
+    font-size: clamp(2.125rem, 7.5vw, 60px);
+    line-height: 1.05;
     color: var(--primary-color);
     margin-top: 0;
 }
 
-h2.main {
-    font-size: 40px;
+/* Antetítulo del hero. Era un <h2> colocado antes del <h1>, lo que dejaba el
+   documento abriendo en nivel 2; visualmente es una línea de apoyo, no un
+   encabezado de sección, así que ahora es un <p>. Anidado bajo .main-left
+   porque `.main-left p` tiene más especificidad que una clase sola. */
+.main-left .main-eyebrow {
+    font-size: clamp(1.25rem, 3.6vw, 40px);
+    font-weight: bold;
+    line-height: 1.15;
+    text-align: left;
     color: var(--text-light);
     margin-top: 0;
 }
@@ -211,6 +233,8 @@ h2.main {
 }
 
 .download-button {
+    display: inline-block;
+    box-sizing: border-box;
     width: 45%;
     padding: 15px 0;
     font-size: 25px;
@@ -253,11 +277,23 @@ h2.main {
 .main-left-game-info img {
     display: block;
     max-height: 70vh;
+    /* Sin max-width la captura de Pong desbordaba el viewport en móvil. */
+    max-width: 100%;
+    height: auto;
 }
 
 .main-right-game {
     flex: 1;
     margin:4%;
+}
+
+/* La fecha era un <h3> bajo un <h2>; al subir el título a <h1> habría quedado
+   un salto de nivel. Es metadato, no encabezado: mismo aspecto, sin nivel. */
+.main-right-game .project-meta {
+    font-size: 30px;
+    text-align: left;
+    color: var(--text-light);
+    margin: 0;
 }
 
 .fill-right {
@@ -274,14 +310,19 @@ h2.main {
     font-size: 20px;
 }
 
-.project-right h1 {
+/* El título de cada sección es un <h2> (nivel 2 bajo el <h1> de la página) y
+   su antetítulo un <p>. Antes eran <h2> + <h1>, en ese orden, lo que invertía
+   la jerarquía y metía varios <h1> en el documento. */
+.project-right h2 {
     font-size: 60px;
     color: var(--accent-color);
     margin: 0 13% 0 0;
 }
 
-.project-right h2 {
+.project-right .project-eyebrow {
     font-size: 40px;
+    font-weight: bold;
+    text-align: left;
     color: var(--text-light);
     margin: 0 13% 0 0;
 }
@@ -354,7 +395,7 @@ h2.main {
     width: 100%;
 }
 
-.pro-title h2{
+.pro-title h1, .pro-title h2{
 	display:flex;
 	justify-content: center;
     margin-top: 2em;
@@ -429,6 +470,20 @@ p.gameDescription {
 
 canvas {
     display: block;
+    border-radius: 10px;
+}
+
+/* Alternativa al visor 3D en modo ahorro de datos: ocupa el hueco ya
+   reservado por #canvas-container, sin desplazar el layout. */
+.canvas-fallback {
+    display: block;
+    /* Encaja exactamente en el hueco reservado. `max-height:100%` no bastaba:
+       como flex item, la altura derivada del aspect ratio se imponía y el
+       retrato sobresalía del contenedor (520px dentro de 354px). */
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
     border-radius: 10px;
 }
 
@@ -554,5 +609,579 @@ canvas {
     font-size: 22px;
     color: var(--primary-color-highlight);
     margin-bottom: 5px;
-    
+
+}
+
+/* ===========================
+   ENGINEERING PROJECT SECTION
+   =========================== */
+
+/* La regla base .project-right h2 está fijada a --accent-color (LED ASTRAY).
+   Esta modificadora separa visualmente "ingeniería" de "juegos". */
+.project-right.eng h2 {
+    color: var(--primary-color);
+}
+
+.download-button.wide {
+    width: auto;
+    padding: 15px 28px;
+}
+
+/* Diagrama de arquitectura (4 capas) en HTML/CSS puro */
+.arch-diagram {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+}
+
+.arch-layer {
+    display: flex;
+    flex-direction: column;
+    padding: 14px 18px;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    background-color: rgba(102, 71, 255, 0.08);
+}
+
+.arch-layer-name {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    color: var(--primary-color-highlight);
+}
+
+.arch-layer-note {
+    font-size: 16px;
+    color: var(--text-light);
+    opacity: 0.75;
+}
+
+.arch-flow {
+    padding: 6px 0;
+    font-size: 22px;
+    line-height: 1;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* ===========================
+   RESPONSIVE
+   ===========================
+
+   Objetivo: por debajo de 900px el layout de dos columnas se apila y las
+   secciones dejan de medir exactamente una pantalla. La combinación de
+   `height: 100vh` + `scroll-snap-type: y mandatory` corta el contenido en
+   móvil: si el texto mide más que la pantalla, lo que sobra queda
+   inalcanzable porque el snap devuelve el scroll al centro de la sección.
+   Aquí se cambia a `min-height`, que deja crecer la sección. */
+
+@media (max-width: 900px) {
+    section {
+        min-height: 100vh;
+        min-height: 100svh;   /* descuenta la barra de direcciones del navegador móvil */
+        /* La cabecera fija mide ~89px (el botón ☰ va a 2em): el relleno
+           superior tiene que dejarla libre con holgura. */
+        padding: 7rem 0 3.5rem;
+        box-sizing: border-box;
+    }
+
+    /* La galería cuelga de un div, no de una section: necesita su propio
+       espacio para no quedar bajo la cabecera. */
+    .pro-title {
+        padding-top: 7rem;
+    }
+
+    /* `align-content: center` centra las líneas del flex: cuando el contenido
+       apilado es más alto que la caja, desborda por ARRIBA y la primera línea
+       de texto se va detrás de la cabecera fija. Anclar al inicio hace que
+       crezca sólo hacia abajo. */
+    .main-container,
+    .main-container-game {
+        align-items: flex-start;
+        align-content: flex-start;
+    }
+
+    /* Apilar los layouts de dos columnas. */
+    .main-left,
+    .main-right,
+    .project-left,
+    .project-right,
+    .main-left-game-info,
+    .main-right-game {
+        flex: 1 1 100%;
+    }
+
+    .main-right {
+        height: auto;
+    }
+
+    /* El 13% de sangría lateral del escritorio deja el texto sin aire en móvil,
+       y `.main-left p` no tenía margen derecho: el párrafo tocaba el borde. */
+    h1.main,
+    .main-left .main-eyebrow {
+        margin-left: 6%;
+        margin-right: 6%;
+    }
+
+    .main-left p {
+        margin: 0.5em 6% 0 6%;
+    }
+
+    .main-btns,
+    .action-btns {
+        margin: 1.75em 6% 0 6%;
+    }
+
+    .project-right h2,
+    .project-right .project-eyebrow {
+        margin: 0 6%;
+    }
+
+    .project-right h2 {
+        font-size: clamp(2rem, 7.5vw, 60px);
+        line-height: 1.05;
+    }
+
+    .project-right .project-eyebrow {
+        font-size: clamp(1.25rem, 3.9vw, 40px);
+        line-height: 1.15;
+    }
+
+    .project-right p {
+        margin: 0.75em 6% 0 6%;
+    }
+
+    .project-right {
+        margin-top: 1.5em;
+    }
+
+    /* El justificado a ancho estrecho abre ríos de espacio entre palabras. */
+    p,
+    p.gameDescription,
+    .main-left p,
+    .project-right p {
+        text-align: left;
+    }
+
+    /* Los botones a 45% quedan ilegibles en una columna estrecha. */
+    .download-button,
+    .action-button {
+        width: auto;
+        padding: 15px 24px;
+    }
+
+    /* El visor 3D y el vídeo dependían de 100vh; acotarlos evita empujar
+       el texto fuera de la pantalla. */
+    #canvas-container {
+        height: 42vh;
+        height: 42svh;
+    }
+
+    .project-left iframe {
+        height: 46vh;
+        height: 46svh;
+    }
+
+    .project-left {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .arch-diagram {
+        max-width: none;
+    }
+
+    .arch-layer-name {
+        font-size: 22px;
+    }
+
+    /* La galería a 4 columnas no cabe; una sola columna por fila. */
+    .gallery-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .pro-title h1,
+    .pro-title h2 {
+        font-size: clamp(2.5rem, 12vw, 70px);
+        margin-top: 0;
+    }
+
+    /* El tablero DFS estaba atado a 70vh, más ancho que un móvil. */
+    .dfs-container {
+        width: min(88vw, 60vh);
+        height: min(88vw, 60vh);
+    }
+
+    .main-container-game {
+        margin-top: 0;
+    }
+
+    /* Red de seguridad para los encabezados que no tienen regla propia
+       (Pong, DFS). Las reglas más específicas mantienen su tamaño. */
+    h1 {
+        font-size: clamp(2rem, 7.5vw, 60px);
+        line-height: 1.1;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 5vw, 40px);
+        line-height: 1.15;
+    }
+}
+
+/* Teléfonos estrechos (390×844, 430×932). */
+@media (max-width: 480px) {
+    .dfs-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dfs-run-button {
+        width: auto;
+    }
+}
+
+/* ===========================
+   MOVIMIENTO REDUCIDO
+   =========================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ===========================
+   FOCO VISIBLE
+   ===========================
+
+   La regla global `button { outline: none }` dejaba los botones sin
+   indicador de foco de teclado. */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 3px solid var(--primary-color-highlight);
+    outline-offset: 3px;
+}
+
+/* ===========================
+   CASE STUDY / LONG-FORM PAGES
+   =========================== */
+
+/* El case study ya no envuelve su contenido en un <section>: así el relleno
+   superior tiene un único responsable (`.doc`) en lugar de sumar el de
+   `section` y el del artículo, que en móvil dejaba ~220px vacíos antes del H1.
+   `.doc` es directamente hijo de <main>. */
+.doc {
+    max-width: 70ch;
+    margin: 0 auto;
+    /* 7rem libera la cabecera fija (~89px) con holgura, igual que las secciones. */
+    padding: 7rem 24px 96px;
+}
+
+.doc h1 {
+    font-size: 52px;
+    line-height: 1.05;
+    margin: 0 0 16px;
+}
+
+/* Anidadas bajo .doc a propósito: la regla `.doc p` (clase + elemento) tiene
+   más especificidad que una clase sola y le ganaría al tamaño de fuente. */
+.doc .doc-subtitle {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: left;
+    color: var(--primary-color-highlight);
+    margin: 0 0 6px;
+}
+
+.doc .doc-role {
+    font-size: 18px;
+    text-align: left;
+    color: var(--text-light);
+    opacity: 0.75;
+    margin: 0;
+}
+
+.doc-rule {
+    border: 0;
+    border-top: 1px solid var(--primary-color);
+    opacity: 0.4;
+    margin: 44px 0;
+}
+
+.doc h2 {
+    font-size: 32px;
+    color: var(--text-light);
+    margin: 56px 0 12px;
+}
+
+.doc h3 {
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--primary-color-highlight);
+    margin: 44px 0 12px;
+}
+
+.doc p {
+    font-size: 19px;
+    line-height: 1.75;
+    text-align: left;
+    margin: 0 0 1.15em;
+}
+
+.doc ul {
+    margin: 0 0 1.5em;
+    padding-left: 1.2em;
+}
+
+.doc li {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 0.9em;
+}
+
+.doc li::marker {
+    color: var(--primary-color);
+}
+
+.doc code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.85em;
+    color: var(--keyword-color);
+}
+
+.doc-lede {
+    border-left: 3px solid var(--primary-color);
+    padding-left: 20px;
+}
+
+.doc-stats {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin: 0 0 1.5em;
+    font-size: 19px;
+}
+
+.doc-stats dt,
+.doc-stats dd {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(227, 232, 232, 0.15);
+}
+
+.doc-stats dd {
+    margin: 0;
+    padding-left: 24px;
+    text-align: right;
+    font-weight: bold;
+    color: var(--primary-color-highlight);
+}
+
+.doc .doc-close {
+    font-size: 21px;
+    color: var(--primary-color-highlight);
+}
+
+/* Nota metodológica: más pequeña que el cuerpo pero aún legible en móvil. */
+.doc .doc-fine {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+.doc-back {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 21px;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.doc-back:hover {
+    color: var(--text-light);
+}
+
+/* ===========================
+   DIAGRAMAS DEL CASE STUDY
+   ===========================
+
+   HTML/CSS puro, sin librerías y sin imágenes. El significado nunca depende
+   sólo del color: cada bloque lleva su etiqueta de texto. */
+
+.dg {
+    margin: 32px 0 40px;
+}
+
+.dg-caption {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-light);
+    opacity: 0.7;
+    margin-bottom: 16px;
+}
+
+/* Anidados bajo .doc: `.doc ul`, `.doc li` y `.doc p` llevan clase + elemento
+   y ganarían a una clase sola en padding, margen y tamaño de fuente. */
+.doc .dg-flow {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+}
+
+.doc .dg-step {
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 0;
+    background-color: rgba(102, 71, 255, 0.08);
+}
+
+.doc .dg-step + .dg-step {
+    margin-top: 34px;
+    position: relative;
+}
+
+.doc .dg-step + .dg-step::before {
+    content: "\2193";
+    position: absolute;
+    top: -29px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    line-height: 1;
+    color: var(--primary-color);
+}
+
+.dg-step-t {
+    display: block;
+    font-size: 19px;
+    font-weight: bold;
+    color: var(--primary-color-highlight);
+}
+
+.dg-step-d {
+    display: block;
+    font-size: 16px;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+.doc .dg-outcomes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+.doc .dg-outcome {
+    border-left: 4px solid var(--primary-color);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 0;
+    background-color: rgba(227, 232, 232, 0.04);
+}
+
+.doc .dg-outcome.is-compensated {
+    border-left-color: var(--keyword-color);
+}
+
+.doc .dg-outcome.is-contained {
+    border-left-color: var(--accent-color);
+}
+
+.doc .dg-outcome.is-designed {
+    border-left-style: dashed;
+    border-left-color: var(--text-light);
+}
+
+.dg-outcome-k {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--primary-color-highlight);
+    margin-bottom: 2px;
+}
+
+.dg-outcome-v {
+    display: block;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.doc .dg-lanes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+}
+
+.doc .dg-lane {
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 0;
+}
+
+.dg-lane-h {
+    display: block;
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--primary-color-highlight);
+}
+
+.dg-lane-b {
+    display: block;
+    font-size: 16px;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+.doc .dg-note {
+    border: 2px dashed var(--accent-color);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+    text-align: left;
+}
+
+/* Alternativa textual para lectores de pantalla. */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (max-width: 768px) {
+    .doc { padding: 7rem 20px 64px; }
+    .doc h1 { font-size: 36px; }
+    .doc h2 { font-size: 26px; margin-top: 44px; }
+    .doc h3 { font-size: 22px; }
+    .doc .doc-subtitle { font-size: 19px; }
+    .doc p, .doc li { font-size: 18px; }
+    .doc-stats { font-size: 17px; }
 }

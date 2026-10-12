@@ -6,6 +6,8 @@
     <title>Pong</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     
+    <link rel="icon" href="data:,">
+
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/navbar.css">
 </head>
@@ -13,28 +15,30 @@
     <header>
         <nav class="navbar">
             
-            <button class="navbar-toggle" aria-label="Toggle menu">
+            <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
                  ☰
             </button>
-            <ul class="navbar-menu">
+            <ul class="navbar-menu" id="navbar-menu">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="gameGallery.html">Galery</a></li>
+                <li><a href="kiosk-case-study.html">Work</a></li>
+                <li><a href="gameGallery.html">Gallery</a></li>
                 <li><a href="contacto.html">Contact</a></li>
 				
             </ul>
         </nav>
     </header>
 
+	<main>
 	<section class="main-container-game">
         <!-- Sección izquierda con la imagen -->
         <div class="main-left-game-info">
-            <img src="images/pongSreenShot.png" alt="Foto" class="main-image">
+            <img src="images/pongSreenShot.png" alt="Screenshot of the Pong clone: two paddles and a ball on a dark court, with the score on top." class="main-image">
         </div>
         
         <!-- Sección derecha con el texto -->
         <div class="main-right-game">
-			<h2>Pong</h2>
-			<h3>December 2024</h3>
+			<h1>Pong</h1>
+			<p class="project-meta">December 2024</p>
 			<p class="gameDescription" >A simple version of Pong for PC. Made in Godot with C# scripts.<br>
 
 										Use W and S to control the Paddle (Player 1) on the left.<br>
@@ -43,10 +47,13 @@
 										Press P to Open the Pause Menu.<br>
 
 										Have fun :)</p>
-			<button onclick="location.href='https://github.com/AJRedZac/pong/releases/download/v1.0.0/pong.exe'" class="download-button" type="button">DOWNLOAD GAME</a>
+			<a href="https://github.com/AJRedZac/pong/releases/download/v1.0.0/pong.exe" class="download-button">DOWNLOAD GAME</a>
         </div>
 		
 		
     </section>
+	</main>
+
+    <script src="js/navbar.js" defer></script>
 </body>
 </html>

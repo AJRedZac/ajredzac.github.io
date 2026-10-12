@@ -8,52 +8,13 @@
     justify-content: center;
 }
 
-.contact-form {
-    width: 100%;
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
-    padding: 2em;
-    background-color: transparent;
-    color: var(--text-light);
-    display: flex;
-    flex-direction: column;
-    gap: .5em;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-}
-
-.contact-form label {
-    margin-top:1em;
-    font-size: 1.2em;
-    color: var(--text-light);
-    text-align: left;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 0.25em;
-    font-size: 1.5em;
-    border-radius: 10px;
-    border: 2px solid var(--primary-color);
-    background-color: transparent;
-    color: var(--text-light);
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-    box-sizing: border-box;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-    outline: none;
-    border-color: var(--primary-color-highlight);
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-.contact-form textarea {
-    resize: vertical;
-    min-height: 120px;
-}
+/* Las reglas de .contact-form se retiraron junto con el formulario: no tenía
+   `action` ni handler, así que el envío hacía POST al propio documento y
+   GitHub Pages responde 501. Aparentaba enviar un mensaje que nunca salía. */
 
 .contact-button {
+    display: inline-block;
+    box-sizing: border-box;
     margin-top: 1em;
     align-self: center; /* centrado horizontal dentro del flex */
     width: 60%;          /* tamaño moderado, responsive */
@@ -61,6 +22,7 @@
     font-size: 2em;
     font-weight: bold;
     text-align: center;
+    text-decoration: none;
     color: var(--text-light);
     background-color: var(--primary-color);
     border-radius: 10px;
@@ -79,4 +41,70 @@
 .contact-button:active {
     color: var(--primary-color-highlight);
     background-color: var(--primary-color);
+}
+
+/* Hereda el marco del formulario anterior para conservar el peso visual. */
+.contact-list {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 2em 0 0;
+    padding: 1.5em 2em;
+    list-style: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.contact-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25em 1em;
+    padding: 0.6em 0;
+}
+
+.contact-list li + li {
+    border-top: 1px solid rgba(227, 232, 232, 0.15);
+}
+
+.contact-list-k {
+    flex: 0 0 6em;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--text-light);
+    opacity: 0.75;
+}
+
+.contact-list a {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary-color-highlight);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.contact-list a:hover {
+    color: var(--text-light);
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .contact-container {
+        /* La cabecera fija mide ~89px; 4em no la libera en móvil. */
+        margin: 0 auto;
+        padding: 7rem 1.25em 3em;
+    }
+
+    .contact-button {
+        width: 100%;
+        font-size: 1.6em;
+    }
+
+    .contact-list {
+        padding: 1.25em 1.25em;
+    }
+
+    .contact-list-k {
+        flex: 0 0 100%;
+    }
 }

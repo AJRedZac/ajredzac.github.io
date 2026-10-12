@@ -1,70 +1,128 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio</title>
+    <title>Alvaro J. Redondo — Backend &amp; Systems Engineer</title>
+    <meta name="description" content="Java and backend engineer. 7+ years building systems across startups, corporations and public institutions.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ajredzac.github.io/">
+    <meta property="og:title" content="Alvaro J. Redondo — Backend &amp; Systems Engineer">
+    <meta property="og:description" content="Java and backend engineer. 7+ years building systems across startups, corporations and public institutions.">
+    <meta property="og:image" content="https://ajredzac.github.io/images/myImage.jpg">
+    <meta name="twitter:card" content="summary">
+
 	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
-    
+
+    <!-- No hay icono propio en el repositorio; se declara la ausencia para
+         evitar la petición 404 a /favicon.ico en cada carga. -->
+    <link rel="icon" href="data:,">
+
     <link rel="stylesheet" href="css/styles.css">
 	<link rel="stylesheet" href="css/navbar.css">
-	
+
 </head>
 
 <body>
 	<header>
         <nav class="navbar">
-            
-            <button class="navbar-toggle" aria-label="Toggle menu">
+
+            <button class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
                  ☰
             </button>
-            <ul class="navbar-menu">
+            <ul class="navbar-menu" id="navbar-menu">
                 <li><a href="index.html">Home</a></li>
+                <li><a href="kiosk-case-study.html">Work</a></li>
                 <li><a href="gameGallery.html">Gallery</a></li>
                 <li><a href="contacto.html">Contact</a></li>
-				<li><a href="files/libros.json">Biblioteca</a></li>
             </ul>
         </nav>
     </header>
+
+	<main>
+
     <section class="main-container">
-        
-        
-        <!--Sección izqquierda con el texto -->
+
+        <!--Sección izquierda con el texto -->
         <div class="main-left">
-			<h2 class="main">SOFTWARE DEVELOPMENT AND DESIGN</h2>
+			<p class="main-eyebrow">BACKEND &amp; SYSTEMS ENGINEERING</p>
 			<h1 class="main">ALVARO J. REDONDO Z.</h1>
-			<p> Computer System's Engineer and Master in Game Design and Development,
-				with over 7 years of experience in full-stack development across local startups, international corporations and public institutions. 
-				Highly skilled in backend architecture, API integration, 
-				cloud deployment, and game development. Proven ability to deliver high-quality software in high-pressure environments. 
-				Currently, I'm working on an independent game project 
-				using Unreal Engine 5. </p>
+			<p> Computer Systems Engineer and Master in Game Design &amp; Development, with over 7 years
+				building software across startups, international corporations and public institutions.
+				I work mainly in <span class="keyword">Java and backend systems</span> — most recently on a
+				self-service kiosk platform where the application drove real money through banking hardware:
+				card payments and thermal ticket printing, against REST backend services. I care about the
+				parts that are hard to fake: concurrency, failure modes, and systems that stay correct
+				when the hardware doesn't cooperate. On the side, I build games. </p>
 			<div class="main-btns">
-				<!--button href="" class="download-button" >VER PROYECTOS</button-->
-				
-				<button class="download-button" id= "downloadCvBtn">DOWNLOAD MY CV</button>
-				
+				<a class="download-button wide" href="kiosk-case-study.html">SEE MY WORK →</a>
 			</div>
         </div>
-		
+
 		<div class="main-right">
 		<!-- Contenedor del modelo 3D -->
-		<div id="canvas-container"></div>
+		<div id="canvas-container" role="img" aria-label="Interactive 3D scene: a stylised model of Alvaro surrounded by slowly rotating game consoles."></div>
 		</div>
-		
+
     </section>
-	
-	 <section class="main-container led-astray-section">
-        
-        
-        <!--Sección derecha con el texto -->
+
+	<section class="main-container kiosk-section" id="work">
+
+		<!--Sección izquierda: diagrama de arquitectura en HTML/CSS -->
 		<div class="project-left">
-			<iframe src="https://www.youtube.com/embed/3BXImyLEt6w" allowfullscreen></iframe>
+			<div class="arch-diagram" role="img" aria-label="Four-layer architecture: UI over Service over Integration over Domain.">
+				<div class="arch-layer">
+					<span class="arch-layer-name">UI</span>
+					<span class="arch-layer-note">JavaFX · 40 views</span>
+				</div>
+				<div class="arch-flow" aria-hidden="true">↓</div>
+				<div class="arch-layer">
+					<span class="arch-layer-name">SERVICE</span>
+					<span class="arch-layer-note">sales flow · session timers</span>
+				</div>
+				<div class="arch-flow" aria-hidden="true">↓</div>
+				<div class="arch-layer">
+					<span class="arch-layer-name">INTEGRATION</span>
+					<span class="arch-layer-note">PIN pad · printer · backend</span>
+				</div>
+				<div class="arch-flow" aria-hidden="true">↓</div>
+				<div class="arch-layer">
+					<span class="arch-layer-name">DOMAIN</span>
+					<span class="arch-layer-note">trips · seats · payments</span>
+				</div>
+			</div>
+		</div>
+
+		<!--Sección derecha con el texto -->
+		<div class="project-right eng">
+			<p class="project-eyebrow">2026 · Java 21 · JavaFX · Spring Boot</p>
+			<h2>SELF-SERVICE TICKETING KIOSK</h2>
+			<p> A desktop application for self-service kiosks at intercity bus terminals, where
+				travelers buy tickets without an agent. The interesting part was never the UI: a
+				Java 21 and JavaFX kiosk application integrating a proprietary native payment SDK,
+				Windows thermal printing, native printer-status monitoring and REST backend
+				services.</p>
+			<p> Primary developer across a substantial Java desktop codebase — 40 FXML views and
+				26 architecture decision records. The work that taught me the most was the payment
+				flow, because a card charge has no rollback.</p>
+
+			<div class="action-btns">
+				<a class="download-button wide" href="kiosk-case-study.html">READ THE CASE STUDY →</a>
+			</div>
+
+        </div>
+
+    </section>
+
+	 <section class="main-container led-astray-section">
+
+		<div class="project-left">
+			<iframe src="https://www.youtube.com/embed/3BXImyLEt6w" title="LED ASTRAY — story teaser" allowfullscreen></iframe>
 		</div>
         <div class="project-right">
-			<h2>In Development</h2>
-			<h1>LED ASTRAY</h1>
-			<br><br>
+			<p class="project-eyebrow">In Development</p>
+			<h2>LED ASTRAY</h2>
 			<p> Edmundo Montenegro, an unlucky private investigator, receives an unexpected offer: 
 				a free stay at the luxurious Gran Hotel Villefort and a generous pay
 				in exchange for a simple job. However, upon entering the Hotel, 
@@ -77,22 +135,13 @@
 				Edmundo must confront the hotel's secrets and decipher 
 				his purpose in this sinister game before it's too late.
 			</p>
-			
-			<!--div class="action-btns">
-				<button href="" class="action-button" >EXPLORA EL HOTEL</button>
-				<button href="" class="action-button" >CONFIRMA TU ESTANCIA</button>
-				
-				
-			</div-->
-			
+
         </div>
-		
-		
-		
+
     </section>
 
-	
-	
+	</main>
+
 	<script type="importmap">
 	{
 		"imports": {
@@ -103,98 +152,9 @@
 	</script>
 	<!-- Importar el script externo -->
 	<script type="module" src="js/modelViewer.js"></script>
-	
-	
-	<!--
-	<script>
-		async function registerVisit() {
-			// Prepare visit data
-			const visitData = {
-				referrer: document.referrer || 'Direct Access', // Referrer or "Direct Access"
-				userAgent: navigator.userAgent,               // Visitor's User-Agent
-				language: navigator.language || 'Unknown',    // Visitor's preferred language
-				path: window.location.pathname,               // Path of the current page
-				protocol: window.location.protocol.replace(':', ''), // Protocol (HTTP/HTTPS)
-				method: 'GET',                                // HTTP method used by the browser
-			};
-			try {
-				// Send a POST request to the backend
-				const response = await fetch('https://mysimpleserver-aebu.onrender.com/register-visit', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json', // Specify the content type
-					},
-					body: JSON.stringify(visitData),      // Send the collected data as JSON
-				});
 
-				if (response.ok) {
-					console.log('Visit registered successfully!');
-				} else {
-					console.error('Failed to register visit:', response.status);
-				}
-			} catch (error) {
-				console.error('Error registering visit:', error);
-			}
-		}
+	<script src="js/navbar.js" defer></script>
+	<script src="js/index.js" defer></script>
 
-		// Call the function when the page loads
-		registerVisit();
-	</script>
-	-->
-	<script>
-		document.getElementById("downloadCvBtn").addEventListener("click", function() {
-			fetch("files/AlvaroRedondoCV2025English.pdf") // Carga el archivo
-			.then(response => response.blob()) // Convierte en blob (archivo binario)
-			.then(blob => {
-				const link = document.createElement("a");
-				link.href = URL.createObjectURL(blob); // Crea un enlace temporal
-				link.download = "AlvaroRedondoCV.pdf"; // Nombre del archivo al descargar
-				document.body.appendChild(link);
-				link.click(); // Simula el clic para descargar
-				document.body.removeChild(link); // Limpia el DOM
-			})
-			.catch(error => console.error("Error al descargar el archivo:", error));
-		});
-	</script>
-	
-	<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const sections = document.querySelectorAll("section");
-        const root = document.documentElement;
-
-        function updateColors() {
-            const scrollY = window.scrollY;
-
-            sections.forEach((section) => {
-                const rect = section.getBoundingClientRect();
-                const sectionTop = rect.top + window.scrollY;
-                const sectionBottom = sectionTop + section.offsetHeight;
-
-                if (scrollY >= sectionTop && scrollY < sectionBottom) {
-                    if (section.classList.contains("led-astray-section")) {
-                        root.style.setProperty("--primary-color", "#BA181B"); // Rojo
-						root.style.setProperty("--primary-color-highlight", "#E84A4D");
-                    } else {
-                        root.style.setProperty("--primary-color", "#6647FF"); // Morado
-						root.style.setProperty("--primary-color-highlight", "#AA99FF");
-                    }
-                }
-            });
-        }
-
-        window.addEventListener("scroll", updateColors);
-        updateColors();
-    });
-	</script>
-
-	<script>
-        const toggle = document.querySelector('.navbar-toggle');
-        const menu = document.querySelector('.navbar-menu');
-
-        toggle.addEventListener('click', () => {
-            menu.classList.toggle('open');
-        });
-    </script>
-	
 </body>
 </html>
